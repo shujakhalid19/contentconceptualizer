@@ -2,7 +2,7 @@ import { Platform,StyleSheet,Dimensions } from 'react-native';
 const {width,height}=Dimensions.get('window');
 
 export default StyleSheet.create({
-    text:{fontFamily: 'Poppins_300Light',color:"#fff"},
+    text:{color:"#fff"},
     flsemi:{flex:0.4},
     fl1: {flex: 1},
     fl2:{flex:2},
@@ -24,8 +24,8 @@ export default StyleSheet.create({
         fontWeight: '300',
         letterSpacing: 0.5
     },
-    heading:{fontSize:56, fontFamily: 'Poppins_600SemiBold', textTransform: 'uppercase'},
-    heading2:{fontSize:34, fontFamily: 'Poppins_600SemiBold'},
+    heading:{fontSize:56, textTransform: 'uppercase'},
+    heading2:{fontSize:34},
     f10:{fontSize:10, fontWeight:'300'},
     f28:{fontSize:28, fontWeight:'300'},
     f24:{fontSize:24, fontWeight:'300'},
@@ -36,9 +36,8 @@ export default StyleSheet.create({
     f12:{fontSize:12, fontWeight:'300'},
 
     center:{textAlign:'center'},
-    username22:{fontSize:20,fontFamily: 'Poppins_300Light'},
-    b:{fontWeight:'bold', fontFamily: 'Poppins_600SemiBold'},
-    body:{fontFamily: 'Poppins_300Light'},
+    username22:{fontSize:20},
+    b:{fontWeight:'bold'},
     dividerTop:{borderTopWidth:12,borderTopColor:'#d3d3d3',marginTop:10},
     dividerBottom:{borderBottomWidth:12,borderBottomColor:'#d3d3d3',paddingBottom:20},
     dividerGrey:{

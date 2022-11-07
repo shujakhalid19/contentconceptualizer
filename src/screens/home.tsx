@@ -1,37 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {StyleSheet,Dimensions,View, Text,Image, ImageBackground, FlatList} from 'react-native'
+import {StyleSheet,Dimensions,View, Text,Image, ImageBackground, FlatList, TouchableOpacity} from 'react-native'
 import s from '../../styles/main';
+import { SharedElement } from "react-navigation-shared-element";
 import {explorer} from '../methods/universal';
+import  Icon  from '@expo/vector-icons/Ionicons'
 const {width,height}=Dimensions.get('window')
 interface newobjtype{
     method:string,
     headers:{ [key: string]: string; }
 }
 
-interface itemobj{
-    id:string,
-    title:string
-}
-
-
-
-const DATA:itemobj[] = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
-
-  const Item = ({title}:any) => (
-
+const Item = ({title}:any) => (
+  <TouchableOpacity onPress={():void=>title.opener(title)}>
+  <SharedElement id={title.item.head}>
     <ImageBackground source={{uri:title.item.image.url}}
     imageStyle={{ borderRadius: 15}}
         style={{
@@ -41,10 +22,28 @@ const DATA:itemobj[] = [
            <Text style={[s.f28,s.b,s.cllight,styles.textWithShadow]}>{title.item.head}</Text>
            <Text style={[s.f18,s.b,s.cllight,styles.textWithShadow]}>{ new Date(title.item.publishDateTime).toDateString()}</Text>
         </ImageBackground>
-  );
+        </SharedElement>
+      </TouchableOpacity>
+);
 
 const Home=(props:any)=>{
     const [value, setValue] = useState<any>([]);
+    const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+    const onRefresh = () => {
+      //set isRefreshing to true
+      setIsRefreshing(true)
+      explorer().then((data:any)=>{
+        setValue(data.items);
+        setIsRefreshing(false);
+      });
+      // and set isRefreshing to false at the end of your callApiMethod()
+    }
+
+    const CardFunction = (data:any):void =>{
+      console.log("HELLO",data);
+      props.navigation.navigate('ProfileUser',data)
+    }
+
     useEffect(() => {
         explorer().then((data:any)=>{
             console.log(data);
@@ -75,17 +74,35 @@ const Home=(props:any)=>{
     
     const renderFun = (item:any ) => {
         console.log("HELLOOOOOO",item);
+        item.opener=CardFunction;
         return <Item title={item} />
     };
     return(
-        <View style={[s.mdtp30]}>
-            <Text style={[s.heading2,s.pdlt10,s.pdbt10,s.b,s.cllightlighter]}>Home</Text>
-            <View style={[s.fl1,{borderRadius:25,paddingBottom:100}]}>
+        <View style={[s.fl1,s.mdtp30,{backgroundColor:"#FFF"}]}>
+            <View style={[s.fl4,{borderRadius:25}]}>
                 
                     <FlatList
                          data={value}
                          renderItem={renderFun}
+                         onRefresh={onRefresh}
+                         refreshing={isRefreshing}
                          keyExtractor={item => item.id}
+                         stickyHeaderHiddenOnScroll={false}
+                         ListHeaderComponent={():any =>(
+                          <View style={[s.fl1,s.row,s.pdtp10,s.pdbt20,{backgroundColor:'#FFF'}]}>
+                            <View style={[s.flsemi,s.pdlt10]}>
+                              <TouchableOpacity onPress={()=>props.navigation.openDrawer()}  style={{width:50,height:50,justifyContent:'center'}}>
+                                <Icon name="menu" size={35} />
+                              </TouchableOpacity>
+                              
+                            </View>
+                            <View style={[s.fl2]}>
+                              <Text style={[s.f24,s.b,s.cllightlighter,{paddingLeft:(width/4)}]}>Latest</Text>
+                              <Text style={[s.f15,{paddingLeft:(width/8)}]}>Get the latest in Hollywood</Text>
+                            </View>
+                          </View>
+                          )}
+                          stickyHeaderIndices={[0]}
 
                      />
                 
