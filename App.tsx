@@ -5,6 +5,9 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { NavigationContainer } from '@react-navigation/native';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 
+import { API_URL } from "@env";
+
+
 import { Platform,Appearance,BackHandler,ScrollView, StyleSheet, Text, View } from 'react-native';
 import Home from './src/screens/home';
 import Blog from './src/screens/blog';
@@ -33,11 +36,11 @@ const Arena = (props:any):any  =>{
 
 
 const Drawer = createDrawerNavigator();
-
 export default function App() {
-
+  useEffect(()=>{
+    console.log(API_URL);
+  },[])
   return (
-    
     <NavigationContainer>
       <Drawer.Navigator initialRouteName='Main'>
         <Drawer.Screen name="Main" component={Arena} options={{headerShown:false}} />

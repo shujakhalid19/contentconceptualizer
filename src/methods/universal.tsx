@@ -1,3 +1,5 @@
+import { API_URL,API_HOST } from "@env";
+
 interface newobjtype{
     method:string,
     headers:{ [key: string]: string; }
@@ -8,8 +10,8 @@ class Operations{
         const options:newobjtype = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': 'a36658c26bmshd702a66ffacac19p103156jsn3c69b0bd736b',
-                'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+                'X-RapidAPI-Key': API_URL,
+                'X-RapidAPI-Host': API_HOST
             }
         };
           var req=await fetch('https://imdb8.p.rapidapi.com/title/get-most-popular-movies?homeCountry=US&purchaseCountry=US&currentCountry=US', options);
@@ -25,8 +27,8 @@ class Operations{
         const options:newobjtype = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': 'a36658c26bmshd702a66ffacac19p103156jsn3c69b0bd736b',
-                'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
+                'X-RapidAPI-Key': API_URL,
+                'X-RapidAPI-Host': API_HOST
             }
         };
           var req=await fetch('https://imdb8.p.rapidapi.com/title/get-news?tconst=tt0944947&limit=25', options);
