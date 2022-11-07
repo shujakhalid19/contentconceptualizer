@@ -5,7 +5,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { NavigationContainer } from '@react-navigation/native';
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 
-import { Appearance,BackHandler,ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Platform,Appearance,BackHandler,ScrollView, StyleSheet, Text, View } from 'react-native';
 import Home from './src/screens/home';
 import Blog from './src/screens/blog';
 
@@ -17,17 +17,16 @@ const colorScheme = Appearance.getColorScheme();
 </ScrollView> */} 
 const SharedStack=createStackNavigator();
 
-const Arena= (props:any)  =>{
+const Arena = (props:any):any  =>{
   return(
   <SharedStack.Navigator
+  screenOptions={{
+    cardStyleInterpolator: Platform.OS==='ios' ? CardStyleInterpolators.forVerticalIOS : CardStyleInterpolators.forBottomSheetAndroid,
+    gestureEnabled: false
+  }}
      >
         <SharedStack.Screen name="SwiperMain" component={Home} options={{headerShown:false}} />
-        <SharedStack.Screen name="ProfileUser" component={Blog}
-          options={{headerShown:false}}
-          sharedElements={(route:any):any=>{
-            return [route.params.i];
-          }}
-        />
+        <SharedStack.Screen name="ProfileUser" component={Blog} options={{headerShown:false}} />
     </SharedStack.Navigator>
   )
 }
@@ -41,7 +40,7 @@ export default function App() {
     
     <NavigationContainer>
       <Drawer.Navigator initialRouteName='Main'>
-        <Drawer.Screen name="Main" component={():any=><Arena/>} options={{headerShown:false}} />
+        <Drawer.Screen name="Main" component={Arena} options={{headerShown:false}} />
       </Drawer.Navigator>
     </NavigationContainer> 
     

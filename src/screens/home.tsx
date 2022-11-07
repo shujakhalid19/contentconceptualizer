@@ -4,6 +4,7 @@ import s from '../../styles/main';
 import { SharedElement } from "react-navigation-shared-element";
 import {explorer} from '../methods/universal';
 import  Icon  from '@expo/vector-icons/Ionicons'
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 const {width,height}=Dimensions.get('window')
 interface newobjtype{
     method:string,
@@ -11,8 +12,7 @@ interface newobjtype{
 }
 
 const Item = ({title}:any) => (
-  <TouchableOpacity onPress={():void=>title.opener(title)}>
-  <SharedElement id={title.item.head}>
+  <TouchableWithoutFeedback onPress={():void=>title.opener(title)}>
     <ImageBackground source={{uri:title.item.image.url}}
     imageStyle={{ borderRadius: 15}}
         style={{
@@ -22,8 +22,7 @@ const Item = ({title}:any) => (
            <Text style={[s.f28,s.b,s.cllight,styles.textWithShadow]}>{title.item.head}</Text>
            <Text style={[s.f18,s.b,s.cllight,styles.textWithShadow]}>{ new Date(title.item.publishDateTime).toDateString()}</Text>
         </ImageBackground>
-        </SharedElement>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
 );
 
 const Home=(props:any)=>{
@@ -40,13 +39,11 @@ const Home=(props:any)=>{
     }
 
     const CardFunction = (data:any):void =>{
-      console.log("HELLO",data);
       props.navigation.navigate('ProfileUser',data)
     }
 
     useEffect(() => {
         explorer().then((data:any)=>{
-            console.log(data);
             setValue(data.items);
         });
         // const genRandomKey = async () => {
@@ -73,7 +70,6 @@ const Home=(props:any)=>{
 
     
     const renderFun = (item:any ) => {
-        console.log("HELLOOOOOO",item);
         item.opener=CardFunction;
         return <Item title={item} />
     };

@@ -29,7 +29,7 @@ class Operations{
                 'X-RapidAPI-Host': 'imdb8.p.rapidapi.com'
             }
         };
-          var req=await fetch('https://imdb8.p.rapidapi.com/title/get-news?tconst=tt0944947&limit=20', options);
+          var req=await fetch('https://imdb8.p.rapidapi.com/title/get-news?tconst=tt0944947&limit=25', options);
           var res= await req.json();
           return res;
     }
